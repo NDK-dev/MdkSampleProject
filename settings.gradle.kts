@@ -34,7 +34,12 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
-        maven(localProperties.getProperty("maven.messay"))
+        maven(extra["maven.messay"] as String) {
+            credentials {
+                username = localProperties.getProperty("maven.messay.username")
+                password = localProperties.getProperty("maven.messay.password")
+            }
+        }
     }
 }
 
