@@ -34,6 +34,7 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
+        maven(localProperties.getProperty("maven.messay"))
     }
 }
 
