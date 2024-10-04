@@ -47,7 +47,7 @@ val optionsBuilder = MdkOptions.Builder()
             threshold = 0.5f,
             requiredMillis = 500,
             waitToActionMillis = 1_000,
-            tooLongMillis = 1_500,
+            tooLongMillis = 1_000,
         )
     )
 
