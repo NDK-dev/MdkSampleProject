@@ -1,21 +1,30 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop.
+[English](https://github.com/NDK-dev/MdkSampleProject/) [日本語](README-JP.md)
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+# Messay Development Kit (MDK) Sample
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## Overview
+This repository is a sample project using the Messay Development Kit (MDK) with Compose Multiplatform.
+MDK is planned to be offered as a paid library, and after its official release, the Maven repository will be available to licensed users.
+Additionally, samples for using MDK with other frameworks are also planned for release.
 
+## Setup Instructions
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
+1. Add the private Maven repository URL to `gradle.properties`.
 
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [GitHub](https://github.com/JetBrains/compose-multiplatform/issues).
+    ```properties
+    maven.messay=https://example.com/messay.maven.repository # URL is not yet determined
+    ```
 
-You can open the web application by running the `:composeApp:wasmJsBrowserDevelopmentRun` Gradle task.
+2. Add your authentication information to `local.properties`.
+
+    ```properties
+    maven.messay.username=${MESSAY_USERNAME}
+    maven.messay.password=${MESSAY_PASSWORD}
+    ```
+
+   > **Note:** `local.properties` contains sensitive information and is already included in `.gitignore`, but ensure it is not included in version control.
+
+## Current Limitations
+- This project depends on a private Maven repository hosting the Messay SDK.
+- As of now, since the SDK has not been released, this project will not work.
+- After the MDK is officially released, the Maven repository will be available to licensed users, allowing the project to be built.
