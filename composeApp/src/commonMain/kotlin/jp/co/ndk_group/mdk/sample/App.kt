@@ -212,7 +212,7 @@ fun HistoryView(
         }
 
         Text(
-            "histry: ${history.history.joinToString(",")}",
+            "history: ${history.history.joinToString(",")}",
             Modifier.weight(1f),
         )
 
