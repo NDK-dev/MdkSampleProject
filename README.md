@@ -9,11 +9,9 @@ Additionally, samples for using MDK with other frameworks are also planned for r
 
 ## Setup Instructions
 
-1. Add the private Maven repository URL to `gradle.properties`.
+1. Purchase a license.
 
-    ```properties
-    maven.messay=https://example.com/messay.maven.repository # URL is not yet determined
-    ```
+    Click [HERE](https://messay.ndk-group.co.jp/en/sdk/) to find out how to purchase.
 
 2. Add your authentication information to `local.properties`.
 

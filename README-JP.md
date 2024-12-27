@@ -9,11 +9,9 @@ MDKは有償ライブラリとして提供予定であり、Mavenリポジトリ
 
 ## 必要な手順
 
-1. `gradle.properties`に専用のMavenリポジトリURLを追加します。
+1. ライセンスを購入する。
 
-    ```properties
-    maven.messay=https://example.com/messay.maven.repository # URLは未定
-    ```
+   購入方法は、[こちら](https://messay.ndk-group.co.jp/ja/sdk/)より案内いたします。
 
 2. `local.properties`に認証情報を追加します。
 
