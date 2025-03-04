@@ -26,12 +26,12 @@ import jp.co.ndk_group.mdk.MdkOptions
 import jp.co.ndk_group.mdk.MdkResult
 import jp.co.ndk_group.mdk.MdkTarget
 import jp.co.ndk_group.mdk.MdkView
-import jp.co.ndk_group.mdk.Side
+import jp.co.ndk_group.mdk.entity.MdkSide
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
-val eyeCloseHold = MdkTarget.EyeCloseHold(Side.Unspecified)
-val eyeCloseRepeat = MdkTarget.EyeCloseRepeat(Side.Unspecified)
+val eyeCloseHold = MdkTarget.EyeCloseHold(MdkSide.Unspecified)
+val eyeCloseRepeat = MdkTarget.EyeCloseRepeat(MdkSide.Unspecified)
 val eyeMovement = MdkTarget.EyeMovement
 
 val optionsBuilder = MdkOptions.Builder()
@@ -93,9 +93,7 @@ fun App() {
                             eyeMovement,
                             MdkOptions.MovementActionParams(
                                 horizontalSensitivity = size.width.value,
-                                verticalSensitiviy = size.height.value,
-                                areaWidth = with(density) { size.width.toPx().toInt() },
-                                areaHeight = with(density) { size.height.toPx().toInt() },
+                                verticalSensitivity = size.height.value,
                             )
                         )
                         .setListener {
