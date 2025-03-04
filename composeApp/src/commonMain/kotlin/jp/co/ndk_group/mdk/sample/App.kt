@@ -39,7 +39,7 @@ val optionsBuilder = MdkOptions.Builder()
         setOf(
             eyeCloseHold,
             eyeCloseRepeat,
-//            eyeMovement, // TODO: 要内部実装。
+            eyeMovement,
         )
     )
     .setActionParams(
