@@ -4,7 +4,12 @@ import ComposeApp
 
 struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
-        MainViewControllerKt.MainViewController()
+        CameraFactory.shared.setFactory {
+            let view = UICameraView()
+            view.delegate = $0
+            return view
+        }
+        return MainViewControllerKt.MainViewController()
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
