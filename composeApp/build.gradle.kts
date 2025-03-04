@@ -66,7 +66,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
-            implementation(libs.mdk)
+            implementation(libs.mdk.compose)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
