@@ -45,17 +45,17 @@ val optionsBuilder = MdkOptions.Builder()
     .setActionParams(
         eyeCloseHold,
         MdkOptions.HorizontalPairedHoldActionParams(
-            threshold = 0.95f,
-            requiredMillis = { count -> if (count == 1) 1_000 else 1_500 },
+            threshold = 0.7f,
+            requiredMillis = { count -> if (count == 1) 1_500 else 2_000 },
         ),
     )
     .setActionParams(
         eyeCloseRepeat,
         MdkOptions.HorizontalPairedRepeatActionParams(
-            threshold = 0.95f,
+            threshold = 0.7f,
             requiredMillis = 500,
             waitToActionMillis = 1_000,
-            tooLongMillis = 1_000,
+            tooLongMillis = 1_500,
         )
     )
 
