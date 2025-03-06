@@ -1,3 +1,5 @@
+import java.util.Properties
+
 pluginManagement {
     repositories {
         google {
@@ -16,6 +18,13 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        val localProperties = Properties().apply {
+            val f = file("local.properties")
+            if (f.exists()) {
+                load(f.inputStream())
+            }
+        }
+        maven(localProperties.getProperty("maven.messay"))
     }
 }
 
