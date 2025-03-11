@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import jp.co.ndk_group.mdk.MdkOptions
@@ -53,7 +54,7 @@ private val optionsBuilder = MdkOptions.Builder()
     )
 
 @Composable
-fun MainActivity.App()  {
+fun App()  {
 
     val hapticFeedback = LocalHapticFeedback.current
 
@@ -65,12 +66,14 @@ fun MainActivity.App()  {
         mutableStateOf(History())
     }
 
+    val configuration = LocalConfiguration.current
+
     var pointerPositionX by remember {
-        mutableStateOf(resources.configuration.screenWidthDp.dp / 2)
+        mutableStateOf(configuration.screenWidthDp.dp / 2)
     }
 
     var pointerPositionY by remember {
-        mutableStateOf(resources.configuration.screenHeightDp.dp / 2)
+        mutableStateOf(configuration.screenHeightDp.dp / 2)
     }
 
     Box {
@@ -134,8 +137,8 @@ fun MainActivity.App()  {
                         }
 
                         val normalizedMovementState = eyeMovement.currentState()
-                        pointerPositionX = resources.configuration.screenWidthDp.dp * normalizedMovementState.x
-                        pointerPositionY =  resources.configuration.screenHeightDp.dp * normalizedMovementState.y
+                        pointerPositionX = configuration.screenWidthDp.dp * normalizedMovementState.x
+                        pointerPositionY =  configuration.screenHeightDp.dp * normalizedMovementState.y
                     }
                     .build(),
                 Modifier.weight(1f),
