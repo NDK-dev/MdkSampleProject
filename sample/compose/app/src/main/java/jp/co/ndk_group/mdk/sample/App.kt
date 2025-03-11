@@ -44,6 +44,13 @@ private val optionsBuilder = MdkOptions.Builder()
             tooLongMillis = 1_500,
         )
     )
+    .setActionParams(
+        eyeMovement,
+        MdkOptions.MovementActionParams(
+            horizontalSensitivity = 15f,
+            verticalSensitivity = 15f,
+        )
+    )
 
 @Composable
 fun MainActivity.App()  {
@@ -70,13 +77,6 @@ fun MainActivity.App()  {
         Column {
             MdkView(
                 optionsBuilder
-                    .setActionParams(
-                        eyeMovement,
-                        MdkOptions.MovementActionParams(
-                            horizontalSensitivity = 15f,
-                            verticalSensitivity = 15f,
-                        )
-                    )
                     .setListener {
                         when (val hold = eyeCloseHold.currentState()) {
                             is MdkResult.ScalarActionState.CountUp -> {
