@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.onGloballyPositioned
 
 data class History(
     val currentCount: Int? = null,
@@ -19,8 +18,7 @@ fun HistoryView(
     history: History,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier.onGloballyPositioned {
-    }) {
+    Column(modifier) {
 
         Text(name, Modifier.weight(1f))
 
