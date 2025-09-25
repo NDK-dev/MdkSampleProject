@@ -67,11 +67,15 @@ fun App() {
         val hapticFeedback = LocalHapticFeedback.current
 
         var holdHistory by remember {
-            mutableStateOf(History())
+            mutableStateOf(History<Int>())
         }
 
         var repeatHistory by remember {
-            mutableStateOf(History())
+            mutableStateOf(History<Int>())
+        }
+
+        var pointerHistory by remember {
+            mutableStateOf(History<Pair<Float, Float>>())
         }
 
         val size = rememberScreenSize()
@@ -100,16 +104,16 @@ fun App() {
                             when (val hold = eyeCloseHold.currentState()) {
                                 is MdkResult.ScalarActionState.CountUp -> {
                                     holdHistory = holdHistory.copy(
-                                        currentCount = hold.count,
-                                        lastCount = hold.count
+                                        currentValue = hold.count,
+                                        lastValue = hold.count
                                     )
                                     hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                                 }
 
                                 is MdkResult.ScalarActionState.End -> {
                                     holdHistory = holdHistory.copy(
-                                        currentCount = null,
-                                        lastCount = hold.count,
+                                        currentValue = null,
+                                        lastValue = hold.count,
                                         history = holdHistory.history + hold.count
                                     )
                                     hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
@@ -117,7 +121,7 @@ fun App() {
 
                                 is MdkResult.ScalarActionState.None -> {
                                     holdHistory = holdHistory.copy(
-                                        currentCount = null,
+                                        currentValue = null,
                                     )
                                 }
 
@@ -127,16 +131,16 @@ fun App() {
                             when (val repeat = getState(eyeCloseRepeat)) {
                                 is MdkResult.ScalarActionState.CountUp -> {
                                     repeatHistory = repeatHistory.copy(
-                                        currentCount = repeat.count,
-                                        lastCount = repeat.count
+                                        currentValue = repeat.count,
+                                        lastValue = repeat.count
                                     )
                                     hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                                 }
 
                                 is MdkResult.ScalarActionState.End -> {
                                     repeatHistory = repeatHistory.copy(
-                                        currentCount = null,
-                                        lastCount = repeat.count,
+                                        currentValue = null,
+                                        lastValue = repeat.count,
                                         history = repeatHistory.history + repeat.count
                                     )
                                     hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
@@ -144,7 +148,7 @@ fun App() {
 
                                 is MdkResult.ScalarActionState.None -> {
                                     repeatHistory = repeatHistory.copy(
-                                        currentCount = null,
+                                        currentValue = null,
                                     )
                                 }
 
@@ -166,7 +170,7 @@ fun App() {
 
                     HistoryView("hold", holdHistory, Modifier.weight(1f))
                     HistoryView("repeat", repeatHistory, Modifier.weight(1f))
-
+                    HistoryView("pointer", pointerHistory, Modifier.weight(1f))
                 }
 
             }
@@ -187,16 +191,16 @@ fun App() {
 @Composable
 expect fun rememberScreenSize(): DpSize
 
-data class History(
-    val currentCount: Int? = null,
-    val lastCount: Int? = null,
-    val history: List<Int> = emptyList(),
+data class History<T: Any>(
+    val currentValue: T? = null,
+    val lastValue: T? = null,
+    val history: List<T> = emptyList(),
 )
 
 @Composable
-fun HistoryView(
+fun <T: Any> HistoryView(
     name: String,
-    history: History,
+    history: History<T>,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier.onGloballyPositioned {
@@ -205,8 +209,8 @@ fun HistoryView(
         Text(name, Modifier.weight(1f))
 
         Row(Modifier.weight(1f)) {
-            Text("current: ${history.currentCount},")
-            Text("last: ${history.lastCount}")
+            Text("current: ${history.currentValue},")
+            Text("last: ${history.lastValue}")
         }
 
         Text(
