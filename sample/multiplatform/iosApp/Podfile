@@ -7,5 +7,5 @@ target 'iosApp' do
 
   # Pods for iosApp
   pod 'MediaPipeTasksVision', '0.10.14'
-
+  pod 'onnxruntime-objc', '1.14.0'
 end
