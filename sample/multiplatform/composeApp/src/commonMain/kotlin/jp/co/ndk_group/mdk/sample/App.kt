@@ -159,6 +159,12 @@ fun App() {
                             val normalizedMovementState = eyeMovement.currentState()
                             pointerPositionX = (size.width * normalizedMovementState.x)
                             pointerPositionY = (size.height * normalizedMovementState.y)
+                            val pointer = Pair(pointerPositionX.value,pointerPositionY.value)
+                            pointerHistory = pointerHistory.copy(
+                                pointer,
+                                pointer,
+                                (pointerHistory.history + pointer).takeLast(10),
+                            )
                         }
                         .build(),
                     Modifier.weight(1f),
