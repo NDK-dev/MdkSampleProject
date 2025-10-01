@@ -1,12 +1,16 @@
 package jp.co.ndk_group.mdk.sample
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -45,17 +49,44 @@ val optionsBuilder = MdkOptions.Builder()
     .setActionParams(
         eyeCloseHold,
         MdkOptions.HorizontalPairedHoldActionParams(
-            thresholdRatio = 0.7f,
-            requiredMillis = { count -> if (count == 1) 1_500 else 2_000 },
+            thresholdRatio = { side ->
+                when (side) {
+                    MdkSide.Left -> 0.6f
+                    MdkSide.Right -> 0.6f
+                }
+            },
+            requiredMillis = { count -> if (count == 1) 500 else 1_000 },
         ),
     )
     .setActionParams(
         eyeCloseRepeat,
         MdkOptions.HorizontalPairedRepeatActionParams(
-            thresholdRatio = 0.7f,
-            requiredMillis = 500,
-            waitToActionMillis = 1_000,
-            tooLongMillis = 1_500,
+            thresholdRatio = { side ->
+                when (side) {
+                    MdkSide.Left -> 0.6f
+                    MdkSide.Right -> 0.6f
+                }
+            },
+            requiredMillis = 50,
+            waitToActionMillis = 500,
+            tooLongMillis = 500,
+        )
+    )
+    .setActionParams(
+        eyeMovement,
+        MdkOptions.MovementActionParams(
+            blinkThresholdRatio = { side ->
+                when (side) {
+                    MdkSide.Left -> 0.6f
+                    MdkSide.Right -> 0.6f
+                }
+            },
+            sensitivityFactor = {
+                when (it) {
+                    MdkSide.Axis.Horizontal -> 1f
+                    MdkSide.Axis.Vertical -> 1f
+                }
+            },
         )
     )
 
@@ -74,10 +105,6 @@ fun App() {
             mutableStateOf(History<Int>())
         }
 
-        var pointerHistory by remember {
-            mutableStateOf(History<Pair<Float, Float>>())
-        }
-
         val size = rememberScreenSize()
 
         var pointerPositionX by remember {
@@ -88,22 +115,10 @@ fun App() {
             mutableStateOf(size.height / 2)
         }
 
-        val density = LocalDensity.current
         Box {
             Column {
                 MdkView(
                     optionsBuilder
-                        .setActionParams(
-                            eyeMovement,
-                            MdkOptions.MovementActionParams(
-                                sensitivityFactor = {
-                                    when (it) {
-                                        MdkSide.Axis.Horizontal -> size.width.value
-                                        MdkSide.Axis.Vertical -> size.height.value
-                                    }
-                                },
-                            )
-                        )
                         .setListener {
                             when (val hold = eyeCloseHold.currentState()) {
                                 is MdkResult.ScalarActionState.CountUp -> {
@@ -111,7 +126,6 @@ fun App() {
                                         currentValue = hold.count,
                                         lastValue = hold.count
                                     )
-                                    hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                                 }
 
                                 is MdkResult.ScalarActionState.End -> {
@@ -147,7 +161,6 @@ fun App() {
                                         lastValue = repeat.count,
                                         history = repeatHistory.history + repeat.count
                                     )
-                                    hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
                                 }
 
                                 is MdkResult.ScalarActionState.None -> {
@@ -163,28 +176,24 @@ fun App() {
                             val normalizedMovementState = eyeMovement.currentState()
                             pointerPositionX = (size.width * normalizedMovementState.x)
                             pointerPositionY = (size.height * normalizedMovementState.y)
-                            val pointer = Pair(pointerPositionX.value,pointerPositionY.value)
-                            pointerHistory = pointerHistory.copy(
-                                pointer,
-                                pointer,
-                                (pointerHistory.history + pointer).takeLast(10),
-                            )
                         }
                         .build(),
                     Modifier.weight(1f),
                 )
 
                 Column(
-                    Modifier.weight(1f)
+                    verticalArrangement = Arrangement.spacedBy(20.dp),
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                        .padding(10.dp)
+                        .weight(1f)
                 ) {
 
-                    HistoryView("hold", holdHistory, Modifier.weight(1f))
-                    HistoryView("repeat", repeatHistory, Modifier.weight(1f))
-                    HistoryView("pointer", pointerHistory, Modifier.weight(1f))
+                    HistoryView("hold", holdHistory, Modifier)
+                    HistoryView("repeat", repeatHistory, Modifier)
                 }
 
             }
-
 
             Box(
                 Modifier
@@ -213,19 +222,17 @@ fun <T: Any> HistoryView(
     history: History<T>,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier.onGloballyPositioned {
-    }) {
+    Column(modifier = modifier) {
 
-        Text(name, Modifier.weight(1f))
+        Text(name, style = MaterialTheme.typography.h6)
 
-        Row(Modifier.weight(1f)) {
+        Row {
             Text("current: ${history.currentValue},")
             Text("last: ${history.lastValue}")
         }
 
         Text(
-            "history: ${history.history.joinToString(",")}",
-            Modifier.weight(1f),
+            "history: ${history.history.take(10).joinToString(",")}",
         )
 
     }
