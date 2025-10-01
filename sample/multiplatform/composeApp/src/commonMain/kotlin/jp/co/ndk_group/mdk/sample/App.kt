@@ -45,14 +45,14 @@ val optionsBuilder = MdkOptions.Builder()
     .setActionParams(
         eyeCloseHold,
         MdkOptions.HorizontalPairedHoldActionParams(
-            threshold = 0.7f,
+            thresholdRatio = 0.7f,
             requiredMillis = { count -> if (count == 1) 1_500 else 2_000 },
         ),
     )
     .setActionParams(
         eyeCloseRepeat,
         MdkOptions.HorizontalPairedRepeatActionParams(
-            threshold = 0.7f,
+            thresholdRatio = 0.7f,
             requiredMillis = 500,
             waitToActionMillis = 1_000,
             tooLongMillis = 1_500,
@@ -96,8 +96,12 @@ fun App() {
                         .setActionParams(
                             eyeMovement,
                             MdkOptions.MovementActionParams(
-                                horizontalSensitivity = size.width.value,
-                                verticalSensitivity = size.height.value,
+                                sensitivityFactor = {
+                                    when (it) {
+                                        MdkSide.Axis.Horizontal -> size.width.value
+                                        MdkSide.Axis.Vertical -> size.height.value
+                                    }
+                                },
                             )
                         )
                         .setListener {
