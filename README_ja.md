@@ -28,10 +28,11 @@ MDK は有償ライセンスのライブラリとして提供されておりま�
 ### 3. 認証情報を設定する
 
 local.properties に以下の認証情報を追加してください：
+ユーザー名は、[MDK ダッシュボード](https://developer.messay.ndk-group.co.jp/user/mypage/)にログインするときのユーザー名と同じです。パスワードの部分には、[設定](https://developer.messay.ndk-group.co.jp/user/config/)メニューから生成した、認証トークンを入れてください。
 
 ```properties
-maven.messay.username=${MESSAY_USERNAME}
-maven.messay.password=${MESSAY_PASSWORD}
+maven.messay.username=${USER_NAME}
+maven.messay.password=${TOKEN}
 ```
 
 > **注:** `local.properties`には認証情報が含まれるため、すでに `.gitignore` に含まれていますが、バージョン管理に含めないよう注意してください。

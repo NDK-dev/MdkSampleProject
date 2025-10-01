@@ -29,10 +29,11 @@ After submission, we will contact you via email with detailed instructions.
 ### 3. Configure Authentication
 
 Add your authentication credentials to `local.properties`:
+The username is the same as the one used to log in to the [MDK dashboard](https://developer.messay.ndk-group.co.jp/user/mypage/). For the password, use the authentication token generated from the [Settings](https://developer.messay.ndk-group.co.jp/user/config/) menu.
 
 ```properties
-maven.messay.username=${MESSAY_USERNAME}
-maven.messay.password=${MESSAY_PASSWORD}
+maven.messay.username=${USER_NAME}
+maven.messay.password=${TOKEN}
 ```
 
 > **Note:** `local.properties` contains sensitive information and is already included in `.gitignore`, but ensure it is not included in version control.
