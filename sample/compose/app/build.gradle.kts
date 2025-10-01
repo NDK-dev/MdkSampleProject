@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "jp.co.ndk_group.mdk.sample"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "jp.co.ndk_group.mdk.sample"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
