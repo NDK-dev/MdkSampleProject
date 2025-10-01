@@ -75,6 +75,9 @@ class UICameraView: UIView, AVCaptureVideoDataOutputSampleBufferDelegate, Mdk_co
         }
 
         videoOutput.setSampleBufferDelegate(self, queue: sessionQueue)
+        videoOutput.videoSettings = [
+            kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA,
+        ]
 
         captureSession.addOutput(videoOutput)
 
