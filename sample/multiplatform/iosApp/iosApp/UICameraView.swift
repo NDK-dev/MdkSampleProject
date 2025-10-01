@@ -9,12 +9,13 @@
 import UIKit
 import AVFoundation
 import ComposeApp
+import MediaPipeTasksVision
 
 class UICameraView: UIView, AVCaptureVideoDataOutputSampleBufferDelegate, Mdk_composeUICameraViewProtocol {
     var view: UIView {
         return self
     }
-    
+
     var cameraPosition: Int64 = Int64(AVCaptureDevice.Position.front.rawValue)
 
     private var videoDevice: AVCaptureDevice? = nil
@@ -56,16 +57,16 @@ class UICameraView: UIView, AVCaptureVideoDataOutputSampleBufferDelegate, Mdk_co
         }
 
         videoDevice = defaultCamera()
-        
+
         guard videoDevice != nil else {
             return
         }
-        
+
         isPlaying = true
 
         let videoInput: AVCaptureDeviceInput = try! AVCaptureDeviceInput(device: videoDevice!)
         captureSession.addInput(videoInput)
-        
+
         try? videoDevice!.lockForConfiguration()
         videoDevice!.activeVideoMaxFrameDuration = CMTimeMake(value: 1, timescale: 10)
         videoDevice!.activeVideoMinFrameDuration = videoDevice!.activeVideoMaxFrameDuration
@@ -116,7 +117,7 @@ class UICameraView: UIView, AVCaptureVideoDataOutputSampleBufferDelegate, Mdk_co
         }
         return nil
     }
-    
+
     func captureOutput(
         _ output: AVCaptureOutput,
         didOutput sampleBuffer: CMSampleBuffer,
@@ -124,14 +125,13 @@ class UICameraView: UIView, AVCaptureVideoDataOutputSampleBufferDelegate, Mdk_co
     ) {
         updateOrientation()
 
-        let frameRate: Float = Float(videoDevice!.activeVideoMaxFrameDuration.timescale)
-
-
-        guard let sampleImage: UIImage = sampleBuffer.image(orientation: imageOrientation()) else {
+        guard let image: MPImage = try? MPImage(sampleBuffer: sampleBuffer, orientation: imageOrientation()) else {
             return
         }
         
-        delegate?.renderer(sampleImage: sampleImage.resized(size: CGSizeMake(480.0, 360.0)), frameRate: frameRate)
+        let timestamp = sampleBuffer.presentationTimeStamp.seconds * 1000
+        
+        try? delegate?.faceLandmarker.detectAsync(image: image, timestampInMilliseconds: .init(timestamp))
 
     }
 
