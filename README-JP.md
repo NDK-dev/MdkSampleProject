@@ -3,29 +3,48 @@
 # Messay Development Kit (MDK) Sample
 
 ## 概要
-このリポジトリは、Compose Multiplatformを使用してMessay Development Kit (MDK)を利用したサンプルプロジェクトです。
-MDKは有償ライブラリとして提供予定であり、Mavenリポジトリはリリース後にライセンスを取得したユーザーに公開されます。
-また、他のフレームワークでMDKを利用したサンプルも今後公開予定です。
 
-## 必要な手順
+このリポジトリは、Messay Development Kit (MDK)の使い方を紹介するためのサンプルプロジェクトを提供しています。
+サンプルプロジェクトは、以下の２種類を用意しています。
 
-1. ライセンスを購入する。
+- Compose Multiplatform プロジェクト (`sample/multiplatform`)
+- Android Compose プロジェクト (`sample/compose`)
 
-   購入方法は、[こちら](https://messay.ndk-group.co.jp/ja/sdk/)より案内いたします。
+MDK は有償ライセンスのライブラリとして提供されております。ライセンスを購入したのち、プライベートな Maven リポジトリにアクセスできるようになります。
+また、他のフレームワークで MDK を利用したサンプルも今後公開予定です。
 
-2. `local.properties`に認証情報を追加します。
+## セットアップ手順
 
-    ```properties
-    maven.messay.username=${MESSAY_USERNAME}
-    maven.messay.password=${MESSAY_PASSWORD}
-    ```
+### 1. ライセンスを購入する。
 
-   > **注:** `local.properties`には認証情報が含まれるため、すでに `.gitignore` に含まれていますが、バージョン管理に含めないよう注意してください。
+ライセンスの購入には、まず[Messay SDK ページ](https://messay.ndk-group.co.jp/ja/sdk/)よりフォームをご提出いただきます。その後、詳しい手順をメールにてご連絡いたします。
+
+### 2. プロジェクトを開く
+
+- Compose Multiplatform → `sample/multiplatform`フォルダを選択し、Android Studio で開きます。
+- Android Compose → `sample/compose`フォルダを選択し、Android Studio で開きます.
+
+### 3. 認証情報を設定する
+
+local.properties に以下の認証情報を追加してください：
+
+```properties
+maven.messay.username=${MESSAY_USERNAME}
+maven.messay.password=${MESSAY_PASSWORD}
+```
+
+> **注:** `local.properties`には認証情報が含まれるため、すでに `.gitignore` に含まれていますが、バージョン管理に含めないよう注意してください。
+
+### 4. ビルド & 実行
+
+- Compose Multiplatform -> Run `composeApp`
+- Android Compose -> Run `app`
 
 ## 現在の制約
-- このプロジェクトは、Messay SDKがホストされている非公開Mavenリポジトリに依存しています。
-- 現在はリリース前のため、このプロジェクトは動作しません。
-- MDKリリース後、ライセンスを取得したユーザーに対してMavenリポジトリが公開され、プロジェクトがビルド可能となります。
+
+- 本プロジェクトは プライベート Maven リポジトリ に依存しています。
+- リポジトリへのアクセスは ライセンス購入者のみ に限定されています。
 
 ## 詳細なガイダンス
-実装についてのより詳しい説明は、こちらの[ガイダンスページ](https://developer.messay.ndk-group.co.jp/resources/)をご参照ください。
+
+詳細な実装ガイドについては、[開発者向けリソースページ](https://developer.messay.ndk-group.co.jp/resources/)をご参照ください。
