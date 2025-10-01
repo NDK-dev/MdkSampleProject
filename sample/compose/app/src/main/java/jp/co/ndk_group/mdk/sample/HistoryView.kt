@@ -2,6 +2,7 @@ package jp.co.ndk_group.mdk.sample
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,16 +21,15 @@ fun HistoryView(
 ) {
     Column(modifier) {
 
-        Text(name, Modifier.weight(1f))
+        Text(name, style = MaterialTheme.typography.titleMedium)
 
-        Row(Modifier.weight(1f)) {
-            Text("current: ${history.currentCount},")
+        Row {
+            Text("current: ${history.currentCount}, ")
             Text("last: ${history.lastCount}")
         }
 
         Text(
-            "history: ${history.history.joinToString(",")}",
-            Modifier.weight(1f),
+            "history: ${history.history.takeLast(10).joinToString(",")}",
         )
 
     }
