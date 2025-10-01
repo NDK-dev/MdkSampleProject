@@ -126,7 +126,6 @@ fun App() {
                                         currentValue = hold.count,
                                         lastValue = hold.count
                                     )
-                                    hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                                 }
 
                                 is MdkResult.ScalarActionState.End -> {
@@ -162,7 +161,6 @@ fun App() {
                                         lastValue = repeat.count,
                                         history = repeatHistory.history + repeat.count
                                     )
-                                    hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
                                 }
 
                                 is MdkResult.ScalarActionState.None -> {
