@@ -1,6 +1,7 @@
-[English](https://github.com/NDK-dev/MdkSampleProject/) [日本語](README-JP.md)
+[![English](https://img.shields.io/badge/lang-English-blue.svg)](README.md)
+[![日本語](https://img.shields.io/badge/lang-日本語-red.svg)](README_ja.md)
 
-# Messay Development Kit (MDK) Sample
+# Messay Development Kit (MDK) サンプル
 
 ## 概要
 
