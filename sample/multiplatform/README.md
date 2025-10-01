@@ -7,7 +7,7 @@ This repository is a sample project using the Messay Development Kit (MDK) with 
 MDK is planned to be offered as a paid library, and after its official release, the Maven repository will be available to licensed users.
 Additionally, samples for using MDK with other frameworks are also planned for release.
 
-## Setup Instructions
+## How to Setup
 
 1. Purchase a license.
 
@@ -26,3 +26,6 @@ Additionally, samples for using MDK with other frameworks are also planned for r
 - This project depends on a private Maven repository hosting the Messay SDK.
 - As of now, since the SDK has not been released, this project will not work.
 - After the MDK is officially released, the Maven repository will be available to licensed users, allowing the project to be built.
+
+## Detailed Implementation Guide
+For detailed instruction, please refer to the [guidance page](https://developer.messay.ndk-group.co.jp/resources/).
