@@ -1,5 +1,12 @@
 import java.util.Properties
 
+val localProperties = Properties().apply {
+    val f = file("local.properties")
+    if (f.exists()) {
+        load(f.inputStream())
+    }
+}
+
 pluginManagement {
     repositories {
         google {
@@ -18,13 +25,12 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        val localProperties = Properties().apply {
-            val f = file("local.properties")
-            if (f.exists()) {
-                load(f.inputStream())
+        maven(extra["maven.messay"] as String) {
+            credentials {
+                username = localProperties.getProperty("maven.messay.username")
+                password = localProperties.getProperty("maven.messay.password")
             }
         }
-        maven(localProperties.getProperty("maven.messay"))
     }
 }
 
